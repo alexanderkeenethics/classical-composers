@@ -5,7 +5,7 @@ export const useComposerStore = defineStore('composer', {
     composers: [] as Array<{ id: number; name: string; img: string; dateOfBirth: string }>,  // Example structure
     isLoading: false,
     error: null as string | null,
-    addresses: new Map<string, string>(),
+    addresses: new Map<number, string>(),
   }),
 
   // Actions to fetch data from the backend
@@ -28,7 +28,7 @@ export const useComposerStore = defineStore('composer', {
     }
   },
   getters: {
-    composerAddress: state => async (id: string) => {
+    composerAddress: state => async (id: number) => {
       if (!state.addresses.has(id)) {
         try {
           const response = await fetch(`http://localhost:8080/composer-contact-data/${id}`);  // Replace with your actual API
