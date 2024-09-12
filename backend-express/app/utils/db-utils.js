@@ -5,7 +5,7 @@ const path = require('path');
 async function readFile(dbName){
     return new Promise((resolve, reject) => {
         if (!dbName) reject('Invalid DB name');
-        const filePath = path.join(__dirname, 'resources', `${dbName}.json`);
+        const filePath = path.join(__dirname, '..' , 'resources', `${dbName}.json`);
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
                 reject('Error reading file:', err);
