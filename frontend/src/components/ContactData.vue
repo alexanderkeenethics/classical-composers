@@ -10,19 +10,25 @@ export default defineComponent({
       required: true
     }
   },
-  state:{
-    email: '',
-    phone: '',
-    streetAddr: '',
-    city: '',
-    stateCode: '',
-    postalCode: ''
+  data(){
+    return {
+      email: 'some-email@gmail.com',
+      phone: '(XXX) XXX-XXXX',
+      streetAddr: '123 Main Street',
+      city: 'City',
+      stateCode: 'State Code',
+      postalCode: 'Zip/Postal Code'
+    }
   },
   mounted() {
-    useComposerStore.composerAddress(this.composerId).then((data) => {
-      Object.keys(this.state).forEach(key=>{
-        this.state[key] = data[key]
-      });
+    const composerStore = useComposerStore();
+    composerStore.composerAddress(this.composerId).then((data) => {
+      this.email = data.email;
+      this.phone = data.phone;
+      this.streetAddr = data.address.streetAddr;
+      this.city = data.address.city;
+      this.stateCode = data.address.stateCode;
+      this.postalCode = data.address.postalcode;
     });
   },
 })
@@ -33,14 +39,14 @@ export default defineComponent({
     <h4>Contact Info</h4>
 
     <div>
-      <div><span class="item-label">Phone Number</span>: (XXX) XXX-XXXX</div>
-      <div><span class="item-label">Email</span>: some-email@gmail.com</div>
+      <div><span class="item-label">Phone Number</span>: {{phone}}</div>
+      <div><span class="item-label">Email</span>: {{email}}</div>
 
       <h5 class="mt-3">Address</h5>
 
       <div>
-        123 Main Street<br />
-        City, State Code, Zip/Postal Code
+        {{streetAddr}}<br />
+        {{city}}, {{stateCode}}, {{postalCode}}
       </div>
 
     </div>
